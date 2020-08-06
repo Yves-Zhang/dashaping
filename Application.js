@@ -86,7 +86,7 @@ class Exps {
         createRouters(this.app, express)(this.controllers); // 创建路由
         this.BeforeMount()
         await this.Server()
-        await showBanner('Welcome to Dashaping')
+        await showBanner('Dashaping')
         console.log(`Server is running at`, `http://${this.host}:${this.port}`.underline.red)
         this.Mounted()
     }
