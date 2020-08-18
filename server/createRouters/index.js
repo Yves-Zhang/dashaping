@@ -33,7 +33,19 @@ const createRouters = (app, express) => (controllers) => {
 function beRouter(indexRouter, httpType, Fuc, router) {
 	let beforMapp = Array.isArray(Fuc.ControllerBeforeMapping) ? Fuc.ControllerBeforeMapping : [Fuc.ControllerBeforeMapping]
 
-	indexRouter[httpType](router.value, [...beforMapp], (req, res, next) => {
+	let middleWaresRoot = []
+	let middleWares = []
+
+	beforMapp.map(o =>{
+		if(typeof o === 'function'){
+			middleWaresRoot.push(o)
+		}
+		if(typeof o === 'object' && o.value && o.value === router.value && o.middleWares){
+			middleWares.push(o.middleWares)
+		}
+	})
+
+	indexRouter[httpType](router.value, [...middleWaresRoot], [...middleWares],(req, res, next) => {
 		const data = httpType === 'get' ? req.query : req.body;
 		Fuc[router.fuc](data, res, {
 			req,
