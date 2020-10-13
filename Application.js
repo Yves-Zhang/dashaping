@@ -2,7 +2,7 @@ const showBanner = require('node-banner');
 const colors = require("colors")
 const express = require('express')
 
-const app = require('./server')
+const appServer = require('./server')
 const config = require('./server/configManage') || {}
 const yamlConfig = config.yamlConfig || {}
 const createRouters = require('./server/createRouters')
@@ -40,7 +40,7 @@ class Exps {
     // controllers = [];
 
     // // app
-    app = app;
+    app = appServer;
 
     // // host
     host = yamlConfig.host || 'localhost'
