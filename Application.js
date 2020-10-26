@@ -30,26 +30,28 @@ if(hotUpdataStatus){
 
 class Exps {
     constructor() {
-
+			// // 中间件
+			// middleWares = [];
+	
+			// // controllers
+			// controllers = [];
+	
+			// // app
+			this.app = appServer;
+	
+			// // host
+			this.host = yamlConfig.host || 'localhost'
+	
+			// port
+			this.port = yamlConfig.port || 3000
+			
+			// rootPath
+			this.rootPath = yamlConfig.rootPath || null
+	
+			// banner
+			this.banner = 'Welcome to Exps'
     }
 
-    // // 中间件
-    // middleWares = [];
-
-    // // controllers
-    // controllers = [];
-
-    // // app
-    app = appServer;
-
-    // // host
-    host = yamlConfig.host || 'localhost'
-
-    // port
-    port = yamlConfig.port || 3000
-
-    // banner
-    banner = 'Welcome to Exps'
 
     // 服务启动前生命 周期 
     BeforeMount() {
@@ -82,8 +84,8 @@ class Exps {
     // 服务启动
     async Run() {
         this.BeforeSetMiddleWares()
-        this.SetMiddleWares()
-        createRouters(this.app, express)(this.controllers); // 创建路由
+				this.SetMiddleWares()
+        createRouters(this.app, express, this.rootPath)(this.controllers); // 创建路由
         this.BeforeMount()
         await this.Server()
         await showBanner('Dashaping')

@@ -1,5 +1,5 @@
-const createRouters = (app, express) => (controllers) => {
-
+const createRouters = (app, express, rootPath) => (controllers) => {
+	const rootRouter = express.Router()
 	controllers.map((contro, index) => {
 		let item = contro.clazz.prototype._$restMapping
 		let indexRouter = express.Router();
@@ -26,8 +26,14 @@ const createRouters = (app, express) => (controllers) => {
 			});
 		}
 
-		app.use(item.root || '/', indexRouter);
+		rootRouter.use(item.root || '/', indexRouter);
 	});
+	if(!rootPath){
+		app.use(rootRouter)
+		return
+	}
+
+	app.use(rootPath, rootRouter)
 };
 
 function beRouter(indexRouter, httpType, Fuc, router) {
