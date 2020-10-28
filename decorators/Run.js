@@ -1,7 +1,7 @@
 
 function Run(Target) {
     const Clazz = new Target()
-    Clazz.Run()
+    Clazz.run()
 }
 
 module.exports = Run

@@ -49,25 +49,25 @@ class Exps {
 			this.rootPath = yamlConfig.rootPath || null
 	
 			// banner
-			this.banner = 'Welcome to Exps'
+			this.banner = yamlConfig.banner || 'dashaping'
     }
 
 
     // 服务启动前生命 周期 
-    BeforeMount() {
+    beforeMount() {
 
     }
 
     // 服务启动后  生命周期 
-    Mounted() {
+    mounted() {
 
     }
 
-    BeforeSetMiddleWares() {
+    beforeSetMiddleWares() {
 
     }
 
-    SetMiddleWares() {
+    setMiddleWares() {
         if (!this.middleWares || this.middleWares.length === 0) {
             return
         }
@@ -77,20 +77,20 @@ class Exps {
     }
 
     // 启动服务函数
-    async Server() {
+    async server() {
         await this.app.listen(this.port, this.host);
     }
 
     // 服务启动
-    async Run() {
-        this.BeforeSetMiddleWares()
-				this.SetMiddleWares()
+    async run() {
+        this.beforeSetMiddleWares()
+				this.setMiddleWares()
         createRouters(this.app, express, this.rootPath)(this.controllers); // 创建路由
-        this.BeforeMount()
-        await this.Server()
-        await showBanner('Dashaping')
-        console.log(`Server is running at`, `http://${this.host}:${this.port}`.underline.red)
-        this.Mounted()
+        this.beforeMount()
+        await this.server()
+        await showBanner(this.banner)
+        console.log(`server is running at`, `http://${this.host}:${this.port}`.underline.red)
+        this.mounted()
     }
 }
 

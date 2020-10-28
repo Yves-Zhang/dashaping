@@ -6,9 +6,9 @@ function RestController(Target, name, descriptor) {
 
 	// 被装饰对象为 class
 	if (typeof Target === 'function') {
-		if (!Target.prototype.ControllerBeforeMapping) {
-			Target.prototype.ControllerBeforeMapping = (req, res, next) => {
-				console.info('\n' + Target.name + ': ControllerBeforeMapping!!! \n')
+		if (!Target.prototype.controllerBeforeMapping) {
+			Target.prototype.controllerBeforeMapping = (req, res, next) => {
+				console.info('\n' + Target.name + ': controllerBeforeMapping!!! \n')
 				next()
 			}
         }
