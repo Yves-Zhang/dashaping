@@ -83,12 +83,20 @@ class Exps {
 
     // 服务启动
     async run() {
-        this.beforeSetMiddleWares()
-				this.setMiddleWares()
-        createRouters(this.app, express, this.rootPath)(this.controllers); // 创建路由
-        this.beforeMount()
-        await this.server()
-        await showBanner(this.banner)
+				if(this.banner){
+					await showBanner(this.banner)
+				}
+				try{
+					this.beforeSetMiddleWares()
+					this.setMiddleWares()
+					createRouters(this.app, express, this.rootPath)(this.controllers); // 创建路由
+					this.beforeMount()
+					await this.server()
+				}catch(err){
+					console.log(err)
+					console.log(`Server is run fail`.red)
+					return
+				}
         console.log(`server is running at`, `http://${this.host}:${this.port}`.underline.red)
         this.mounted()
     }
