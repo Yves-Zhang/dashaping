@@ -55,7 +55,7 @@ const setStaticConfig = (app, express) => {
 							}
 						})
 					}
-					app.use(`${staticRootPath === '/' ? '' : staticRootPath}${item.path || ''}`, express.static(filePath, {...options, ...item.options}));
+					app.use(`${staticRootPath === '/' ? '' : staticRootPath}${item.path || ''}`, express.static(filePath, {...options, ...newOptions}));
 				});
 			default:
 				break
