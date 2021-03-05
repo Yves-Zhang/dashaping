@@ -40,19 +40,21 @@ const setStaticConfig = (app, express) => {
 				filePaths.forEach(o => {
 					let filePath = prasePath.cwdPath + `/${o}`
 					let newOptions = {...item.options}
-					Object.keys(item.options).forEach(key =>{
-						const strArr = key.split('_')
-						let jsFuc
-						try{
-							if(strArr[1] && strArr[1] === 'js'){
-								jsFuc = require(prasePath.cwdPath + `/${item.options[key]}`)
-								newOptions[key] = jsFuc
+					if(item.options){
+						Object.keys(item.options).forEach(key =>{
+							const strArr = key.split('_')
+							let jsFuc
+							try{
+								if(strArr[1] && strArr[1] === 'js'){
+									jsFuc = require(prasePath.cwdPath + `/${item.options[key]}`)
+									newOptions[key] = jsFuc
+								}
+							}catch(err){
+								console.log(err)
+								console.log(`static option err`.red)
 							}
-						}catch(err){
-							console.log(err)
-							console.log(`static option err`.red)
-						}
-					})
+						})
+					}
 					app.use(`${staticRootPath === '/' ? '' : staticRootPath}${item.path || ''}`, express.static(filePath, {...options, ...item.options}));
 				});
 			default:
